@@ -171,7 +171,7 @@ PlayerSettings:
     Android: com.mayo.dodgii
     Standalone: com.Company.ProductName
   buildNumber: {}
-  AndroidBundleVersionCode: 18
+  AndroidBundleVersionCode: 19
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
