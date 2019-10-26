@@ -13,13 +13,11 @@ public class GameOver : MonoBehaviour
 
     public bool gameOver;
 
-    // Start is called before the first frame update
     void Start()
     {        
         FindObjectOfType<PlayerController> ().OnPlayerDeath += OnGameOver;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(gameOver){
@@ -30,8 +28,17 @@ public class GameOver : MonoBehaviour
     }
     
     void OnGameOver() {
+        // Send score to Google Play Services Leader Board
         long longScore = System.Convert.ToInt64(FindObjectOfType<ScoreManager>().score);
         FindObjectOfType<GooglePlayServices>().AddScoreToLeaderBoard(GPGSIds.leaderboard_high_scores, longScore);
+
+        // Check Score Achievements
+        FindObjectOfType<ScoreManager>().ScoreAchievementCheck(FindObjectOfType<ScoreManager>().score);
+        // Check Total collecions Achievements
+        FindObjectOfType<ScoreManager>().TotalCollectorAchievementCheck();
+        // Check Current game Achievements
+        FindObjectOfType<ScoreManager>().CurrentGameAchievementsCheck();
+
         FindObjectOfType<SoundManager>().PlayDeathSound();
         gameOverScreen.SetActive(true);
         FindObjectOfType<ScoreManager>().scoreUI.SetActive(false);
