@@ -23,10 +23,10 @@ public class StatsManager : MonoBehaviour
         mainMenu.onClick.AddListener(BackToMainMenu);
 
         highScoreUI.text = PlayerPrefs.GetFloat("highScore").ToString();
-        coinsCollectedUI.text = "yellow coins - " + PlayerPrefs.GetFloat("totalCoinsCollected").ToString();
-        biggerCoinsCollectedUI.text = "green gems - " + PlayerPrefs.GetFloat("totalBiggerCoinsCollected").ToString();
-        godModesCollectedUI.text = "blue buffs - " + PlayerPrefs.GetFloat("totalGodModesCollected").ToString();
-        ObstaclesDestroyedUI.text = "obstacles - " + PlayerPrefs.GetFloat("totalObstaclesDestroyed").ToString();
+        coinsCollectedUI.text = "yellow coins: " + PlayerPrefs.GetFloat("totalCoinsCollected").ToString();
+        biggerCoinsCollectedUI.text = "green gems: " + PlayerPrefs.GetFloat("totalBiggerCoinsCollected").ToString();
+        godModesCollectedUI.text = "blue buffs: " + PlayerPrefs.GetFloat("totalGodModesCollected").ToString();
+        ObstaclesDestroyedUI.text = "obstacles: " + PlayerPrefs.GetFloat("totalObstaclesDestroyed").ToString();
     }
 
     void BackToMainMenu()

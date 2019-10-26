@@ -25,6 +25,7 @@ public class ScoreManager : MonoBehaviour
     public float totalBiggerCoinsCollected;
     public float godModesCollected;
     public float totalGodModesCollected;
+    public float obstaclesDestroyed;
     public float totalObstaclesDestroyed;
 
     // Start is called before the first frame update
@@ -173,6 +174,7 @@ public class ScoreManager : MonoBehaviour
         }
         else if (collectable == "obstacle")
         {
+            obstaclesDestroyed += 1;
             totalObstaclesDestroyed += 1;
             PlayerPrefs.SetFloat("totalObstaclesDestroyed", totalObstaclesDestroyed);
         }
