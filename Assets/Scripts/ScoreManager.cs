@@ -40,7 +40,7 @@ public class ScoreManager : MonoBehaviour
         totalObstaclesDestroyed = PlayerPrefs.GetFloat("totalObstaclesDestroyed", totalObstaclesDestroyed);
         totalJewelsCollected = PlayerPrefs.GetFloat("totalJewelsCollected", totalJewelsCollected);
 
-        ScoreAchievementCheck(highScore);
+        ScoreAchievementCheck(PlayerPrefs.GetFloat("highScore"));
         TotalCollectorAchievementCheck();
     }
 
@@ -139,30 +139,30 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void ScoreAchievementCheck(float score)
+    public void ScoreAchievementCheck(float points)
     {
         // Score achievements
-        if (score >= 100)
+        if (points >= 100)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_noob);
         }
-        else if (score >= 500)
+        if (points >= 500)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_amateur);
         }
-        else if (score >= 900)
+        if (points >= 900)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_semipro);
         }
-        else if (score >= 1500)
+        if (points >= 1500)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_professional);
         }
-        else if (score >= 2000)
+        if (points >= 2000)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_master);
         }
-        else if (score >= 5000)
+        if (points >= 5000)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_grand_master);
         }        
