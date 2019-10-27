@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GodModeSpawner : MonoBehaviour
+public class JewelSpawner : MonoBehaviour
 {
 
-    public GameObject godModePrefab;
+    public GameObject jewelPrefab;
 
     public Vector2 secondsBetweenSpawnsMinMax;
     public Vector2 spawnSizeMinMax;
@@ -25,7 +25,7 @@ public class GodModeSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!FindObjectOfType<GameManage>().isPaused && FindObjectOfType<GameManage>().hasStarted && FindObjectOfType<Difficulty>().GetDifficultyPercent() > 0.07f && !FindObjectOfType<PlayerController>().multiplying)
+        if (!FindObjectOfType<GameManage>().isPaused && FindObjectOfType<GameManage>().hasStarted && FindObjectOfType<Difficulty>().GetDifficultyPercent() > 0.18f)
         {
             if (Time.time > nextSpawnTime)
             {
@@ -35,8 +35,8 @@ public class GodModeSpawner : MonoBehaviour
                 float spawnAngle = Random.Range(-spawnAngleMax, spawnAngleMax);
                 float spawnSize = Random.Range(spawnSizeMinMax.x, spawnSizeMinMax.y);
                 Vector2 spawnPosition = new Vector2(Random.Range(-screenHalfSizeWorldUnits.x, screenHalfSizeWorldUnits.x), screenHalfSizeWorldUnits.y + spawnSize);
-                GameObject newGodMode = (GameObject)Instantiate(godModePrefab, spawnPosition, Quaternion.Euler(Vector3.forward * spawnAngle));
-                newGodMode.transform.localScale = Vector2.one * spawnSize;
+                GameObject newJewel = (GameObject)Instantiate(jewelPrefab, spawnPosition, Quaternion.Euler(Vector3.forward * spawnAngle));
+                newJewel.transform.localScale = Vector2.one * spawnSize;
             }
         }         
         

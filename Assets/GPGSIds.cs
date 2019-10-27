@@ -25,21 +25,24 @@
 public static class GPGSIds
 {
         public const string achievement_amateur = "CgkIkd_6nPMGEAIQAg"; // <GPGSID>
+        public const string achievement_destroyer_of_obstacles = "CgkIkd_6nPMGEAIQCA"; // <GPGSID>
         public const string achievement_obstacles_worst_nightmare = "CgkIkd_6nPMGEAIQEw"; // <GPGSID>
         public const string achievement_professional = "CgkIkd_6nPMGEAIQBA"; // <GPGSID>
         public const string achievement_coin_connoisseur = "CgkIkd_6nPMGEAIQDw"; // <GPGSID>
-        public const string achievement_destroyer_of_obstacles = "CgkIkd_6nPMGEAIQCA"; // <GPGSID>
+        public const string achievement_gem_horder = "CgkIkd_6nPMGEAIQDQ"; // <GPGSID>
         public const string achievement_gem_connoisseur = "CgkIkd_6nPMGEAIQEA"; // <GPGSID>
         public const string achievement_coin_collector = "CgkIkd_6nPMGEAIQCQ"; // <GPGSID>
+        public const string achievement_multiplier_horder = "CgkIkd_6nPMGEAIQFg"; // <GPGSID>
+        public const string achievement_multiplier_collector = "CgkIkd_6nPMGEAIQFA"; // <GPGSID>
         public const string achievement_noob = "CgkIkd_6nPMGEAIQAQ"; // <GPGSID>
+        public const string achievement_multiplier_connoisseur = "CgkIkd_6nPMGEAIQFQ"; // <GPGSID>
+        public const string achievement_invincibility_horder = "CgkIkd_6nPMGEAIQDg"; // <GPGSID>
         public const string achievement_master = "CgkIkd_6nPMGEAIQBQ"; // <GPGSID>
-        public const string achievement_buff_horder = "CgkIkd_6nPMGEAIQDg"; // <GPGSID>
-        public const string achievement_gem_horder = "CgkIkd_6nPMGEAIQDQ"; // <GPGSID>
-        public const string achievement_buff_collector = "CgkIkd_6nPMGEAIQCw"; // <GPGSID>
         public const string achievement_gem_collector = "CgkIkd_6nPMGEAIQCg"; // <GPGSID>
         public const string achievement_semipro = "CgkIkd_6nPMGEAIQAw"; // <GPGSID>
+        public const string achievement_invincibility_collector = "CgkIkd_6nPMGEAIQCw"; // <GPGSID>
         public const string achievement_grand_master = "CgkIkd_6nPMGEAIQBg"; // <GPGSID>
-        public const string achievement_buff_connoisseur = "CgkIkd_6nPMGEAIQEQ"; // <GPGSID>
+        public const string achievement_invincibility_connoisseur = "CgkIkd_6nPMGEAIQEQ"; // <GPGSID>
         public const string achievement_coin_horder = "CgkIkd_6nPMGEAIQDA"; // <GPGSID>
         public const string leaderboard_high_scores = "CgkIkd_6nPMGEAIQBw"; // <GPGSID>
 

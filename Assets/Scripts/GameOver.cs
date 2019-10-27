@@ -11,6 +11,7 @@ public class GameOver : MonoBehaviour
     public Text coinsCollectedText;
     public Text biggerCoinsCollectedText;
     public Text godModesCollectedText;
+    public Text jewelsCollectedText;
     public Text ObstaclesDestroyedText;
 
     public string[] gameOverHeadings;
@@ -49,9 +50,10 @@ public class GameOver : MonoBehaviour
         FindObjectOfType<Difficulty>().gameHasStartedTime = 0;
         gameOverText.text = gameOverHeadings[Random.Range(0, gameOverHeadings.Length)];
         scoreUI.text = PlayerPrefs.GetFloat("score", 0).ToString();
-        coinsCollectedText.text = "yellow coins: " + FindObjectOfType<ScoreManager>().coinsCollected.ToString();
-        biggerCoinsCollectedText.text = "green gems: " + FindObjectOfType<ScoreManager>().biggerCoinsCollected.ToString();
-        godModesCollectedText.text = "blue buffs: " + FindObjectOfType<ScoreManager>().godModesCollected.ToString();
+        coinsCollectedText.text = "coins: " + FindObjectOfType<ScoreManager>().coinsCollected.ToString();
+        biggerCoinsCollectedText.text = "gems: " + FindObjectOfType<ScoreManager>().biggerCoinsCollected.ToString();
+        godModesCollectedText.text = "invincibility: " + FindObjectOfType<ScoreManager>().godModesCollected.ToString();
+        jewelsCollectedText.text = "multipliers: " + FindObjectOfType<ScoreManager>().jewelsCollected.ToString();
         ObstaclesDestroyedText.text = "obstacles: " + FindObjectOfType<ScoreManager>().obstaclesDestroyed.ToString();
         gameOver = true;
     }

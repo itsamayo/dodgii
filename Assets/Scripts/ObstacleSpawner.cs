@@ -18,14 +18,16 @@ public class ObstacleSpawner : MonoBehaviour
 
     Renderer obstacleRender;
 
-    Color obstacleStartColor;
+    public Color obstacleStartColor;
+    public Color godModeEnabled;
+    public Color multiplierEnabled;
 
     // Start is called before the first frame update
     void Start()
     {
         screenHalfSizeWorldUnits = new Vector2(Camera.main.aspect * Camera.main.orthographicSize, Camera.main.orthographicSize);
         obstacleRender = obstaclePrefab.GetComponent<Renderer>();
-        obstacleStartColor = obstacleRender.sharedMaterial.color;
+        obstacleRender.sharedMaterial.color = obstacleStartColor;
     }
 
     // Update is called once per frame
@@ -35,10 +37,14 @@ public class ObstacleSpawner : MonoBehaviour
         if (!FindObjectOfType<GameManage>().isPaused && FindObjectOfType<GameManage>().hasStarted) 
         {
             if (FindObjectOfType<PlayerController>() != null && FindObjectOfType<PlayerController>().godMode)
-            {                
-                obstacleRender.sharedMaterial.color = Color.cyan;
+            {
+                obstacleRender.sharedMaterial.color = godModeEnabled;
             }
-            else 
+            else if (FindObjectOfType<PlayerController>() != null && FindObjectOfType<PlayerController>().multiplying) 
+            {
+                obstacleRender.sharedMaterial.color = multiplierEnabled;
+            }
+            else
             {
                 obstacleRender.sharedMaterial.color = obstacleStartColor;
             }

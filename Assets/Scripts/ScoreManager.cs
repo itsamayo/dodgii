@@ -25,17 +25,20 @@ public class ScoreManager : MonoBehaviour
     public float totalBiggerCoinsCollected;
     public float godModesCollected;
     public float totalGodModesCollected;
+    public float jewelsCollected;
+    public float totalJewelsCollected;
     public float obstaclesDestroyed;
     public float totalObstaclesDestroyed;
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
         highScore = PlayerPrefs.GetFloat("highScore", highScore);
         totalCoinsCollected = PlayerPrefs.GetFloat("totalCoinsCollected", totalCoinsCollected);        
         totalBiggerCoinsCollected = PlayerPrefs.GetFloat("totalBiggerCoinsCollected", totalBiggerCoinsCollected);        
         totalGodModesCollected = PlayerPrefs.GetFloat("totalGodModesCollected", totalGodModesCollected);
         totalObstaclesDestroyed = PlayerPrefs.GetFloat("totalObstaclesDestroyed", totalObstaclesDestroyed);
+        totalJewelsCollected = PlayerPrefs.GetFloat("totalJewelsCollected", totalJewelsCollected);
 
         ScoreAchievementCheck(highScore);
         TotalCollectorAchievementCheck();
@@ -81,14 +84,24 @@ public class ScoreManager : MonoBehaviour
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_gem_horder);
         }
 
-        // Godmode collector/horder achievements
+        // Invincibility collector/horder achievements
         if (godModesCollected >= 15)
         {
-            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_buff_collector);
+            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_collector);
         }
         if (godModesCollected >= 30)
         {
-            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_buff_horder);
+            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_horder);
+        }
+
+        // Multiplier collector/horder achievements
+        if (jewelsCollected >= 15)
+        {
+            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_collector);
+        }
+        if (jewelsCollected >= 30)
+        {
+            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_horder);
         }
 
     }
@@ -107,10 +120,16 @@ public class ScoreManager : MonoBehaviour
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_gem_connoisseur);
         }
 
-        // Buff connoiseur
+        // Invincibility connoiseur
         if (totalGodModesCollected >= 500)
         {
-            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_buff_connoisseur);
+            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_connoisseur);
+        }
+
+        // Multiplier connoiseur
+        if (totalJewelsCollected >= 500)
+        {
+            GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_multiplier_connoisseur);
         }
 
         // Obstacle's worst nightmare
@@ -143,7 +162,7 @@ public class ScoreManager : MonoBehaviour
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_master);
         }
-        else if (score >= 3500)
+        else if (score >= 5000)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_grand_master);
         }        
@@ -171,6 +190,12 @@ public class ScoreManager : MonoBehaviour
             godModesCollected += 1;
             totalGodModesCollected += 1;
             PlayerPrefs.SetFloat("totalGodModesCollected", totalGodModesCollected);
+        }
+        else if (collectable == "jewel")
+        {
+            jewelsCollected += 1;
+            totalJewelsCollected += 1;
+            PlayerPrefs.SetFloat("totalJewelsCollected", totalJewelsCollected);
         }
         else if (collectable == "obstacle")
         {

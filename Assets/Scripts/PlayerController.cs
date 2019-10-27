@@ -10,32 +10,41 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 7f;    
     public float acceleration = 7f;
     public float deceleration = 7f;
-    public float turnTilt = 15f;    
+    public float turnTilt = 15f;
 
     public bool godMode;
-    public bool slomo;
+    public bool multiplying;
 
     public event System.Action OnPlayerDeath;
 
     float screenHalfWidthInWorldUnits;
     float godModeTimer;
+    float multiplierTimer;
+    float multiplier = 1.0f;
 
     Color colorStart;
     Color colorGodMode = Color.cyan;
+    Color colorMultiplying = Color.magenta;
+
 
     public Text godModeDisplayerUI;
+    public Text multiplierDisplayerUI;
 
     public GameObject godModeDisplayer;
+    public GameObject multiplierDisplayer;
     public GameObject coinParticleEffect;
     public GameObject biggerCoinParticleEffect;
     public GameObject godModeParticleEffect;
-    public GameObject obstacleParticleEffect;
+    public GameObject jewelParticleEffect;
+    public GameObject godModeObstacleParticleEffect;
+    public GameObject multiplyingObstacleParticleEffect;
 
     Renderer playerRenderer;
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
+        
         float halfPlayerWidth = transform.localScale.x / 2f;
         screenHalfWidthInWorldUnits = Camera.main.aspect * Camera.main.orthographicSize + halfPlayerWidth;
         playerRenderer = GetComponent<Renderer> ();
@@ -57,16 +66,29 @@ public class PlayerController : MonoBehaviour
             {
                 godModeDisplayerUI.text = "you're invincible " + godModeTimer.ToString();
             }
-            
+
+            if (multiplying)
+            {
+                multiplierDisplayerUI.text = "x" + multiplier.ToString() + " point multiplyer " + multiplierTimer.ToString();
+            }
+
             if (godModeTimer == 0)
             {
                 StartCoroutine(FindObjectOfType<ScoreManager>().FadeTextToZeroAlpha(0.5f, godModeDisplayerUI));
                 playerRenderer.material.color = colorStart;                
                 godMode = false;
             }
+
+            if (multiplierTimer == 0)
+            {
+                StartCoroutine(FindObjectOfType<ScoreManager>().FadeTextToZeroAlpha(0.5f, multiplierDisplayerUI));
+                playerRenderer.material.color = colorStart;
+                multiplying = false;
+                multiplier = 1.0f;
+            }
         }       
 
-    }
+    }    
 
     IEnumerator EnableGodMode()
     {
@@ -80,9 +102,22 @@ public class PlayerController : MonoBehaviour
         }        
     }
 
-    IEnumerator DestroyParticleEffect(GameObject particleSystem)
+    IEnumerator EnableMultiplier()
     {
-        yield return new WaitForSeconds(0.4f);
+        multiplying = true;
+        multiplier = Random.Range(2, 5);
+        playerRenderer.material.color = colorMultiplying;
+        StartCoroutine(FindObjectOfType<ScoreManager>().FadeTextToFullAlpha(0.5f, multiplierDisplayerUI));
+        for (int i = 0; i < 11; i++)
+        {
+            yield return new WaitForSeconds(1);
+            multiplierTimer -= 1;
+        }
+    }
+
+    IEnumerator DestroyParticleEffect(GameObject particleSystem, float time)
+    {
+        yield return new WaitForSeconds(time);
         Destroy(particleSystem);
     }
     
@@ -133,7 +168,7 @@ public class PlayerController : MonoBehaviour
     {
         if(triggerCollider.tag == "Obstacle")
         {
-            if (!godMode)
+            if (!godMode && !multiplying)
             {
                 if (OnPlayerDeath != null)
                 {
@@ -144,12 +179,20 @@ public class PlayerController : MonoBehaviour
             else 
             {
                 Vector2 spawnPosition = new Vector2(triggerCollider.transform.position.x, triggerCollider.transform.position.y);
-                GameObject newParticleEffect = (GameObject)Instantiate(obstacleParticleEffect, spawnPosition, Quaternion.Euler(Vector3.forward));
+                GameObject newParticleEffect;
+                if (godMode)
+                {
+                    newParticleEffect = (GameObject)Instantiate(godModeObstacleParticleEffect, spawnPosition, Quaternion.Euler(Vector3.forward));
+                }
+                else 
+                {
+                    newParticleEffect = (GameObject)Instantiate(multiplyingObstacleParticleEffect, spawnPosition, Quaternion.Euler(Vector3.forward));
+                }                
                 FindObjectOfType<CameraShake>().Shake(0.08f, 0.13f);
-                FindObjectOfType<ScoreManager>().AddToScore(10, "obstacle");
+                FindObjectOfType<ScoreManager>().AddToScore(10 * multiplier, "obstacle");
                 FindObjectOfType<SoundManager>().PlayObstacleDestroyedSound();
                 Destroy(triggerCollider.gameObject);
-                StartCoroutine(DestroyParticleEffect(newParticleEffect));
+                StartCoroutine(DestroyParticleEffect(newParticleEffect,  0.5f));
                 GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_destroyer_of_obstacles);
             }           
             
@@ -160,10 +203,10 @@ public class PlayerController : MonoBehaviour
             Vector2 spawnPosition = new Vector2(triggerCollider.transform.position.x, triggerCollider.transform.position.y);
             GameObject newParticleEffect = (GameObject)Instantiate(coinParticleEffect, spawnPosition, Quaternion.Euler(Vector3.forward));
             FindObjectOfType<CameraShake>().Shake(0.03f, 0.1f);
-            FindObjectOfType<ScoreManager>().AddToScore(3, "coin");
+            FindObjectOfType<ScoreManager>().AddToScore(3 * multiplier, "coin");
             FindObjectOfType<SoundManager>().PlayCoinCollectSound();
             Destroy(triggerCollider.gameObject);
-            StartCoroutine(DestroyParticleEffect(newParticleEffect));
+            StartCoroutine(DestroyParticleEffect(newParticleEffect, 0.5f));
         }
 
         if (triggerCollider.tag == "BiggerCoin")
@@ -171,10 +214,10 @@ public class PlayerController : MonoBehaviour
             Vector2 spawnPosition = new Vector2(triggerCollider.transform.position.x, triggerCollider.transform.position.y);
             GameObject newParticleEffect = (GameObject)Instantiate(biggerCoinParticleEffect, spawnPosition, Quaternion.Euler(Vector3.forward));
             FindObjectOfType<CameraShake>().Shake(0.06f, 0.1f);
-            FindObjectOfType<ScoreManager>().AddToScore(5, "biggerCoin");
+            FindObjectOfType<ScoreManager>().AddToScore(5 * multiplier, "biggerCoin");
             FindObjectOfType<SoundManager>().PlayBiggerCoinCollectSound();
             Destroy(triggerCollider.gameObject);
-            StartCoroutine(DestroyParticleEffect(newParticleEffect));
+            StartCoroutine(DestroyParticleEffect(newParticleEffect, 0.5f));
         }
 
         if (triggerCollider.tag == "GodMode")
@@ -182,12 +225,25 @@ public class PlayerController : MonoBehaviour
             Vector2 spawnPosition = new Vector2(triggerCollider.transform.position.x, triggerCollider.transform.position.y);
             GameObject newParticleEffect = (GameObject)Instantiate(godModeParticleEffect, spawnPosition, Quaternion.Euler(Vector3.forward));
             FindObjectOfType<CameraShake>().Shake(0.1f, 0.2f);
-            FindObjectOfType<ScoreManager>().AddToScore(20, "godMode");
+            FindObjectOfType<ScoreManager>().AddToScore(20 * multiplier, "godMode");
             godModeTimer = 7;
             StartCoroutine(EnableGodMode());
             FindObjectOfType<SoundManager>().PlayGodModeCollectSound();
             Destroy(triggerCollider.gameObject);
-            StartCoroutine(DestroyParticleEffect(newParticleEffect));
+            StartCoroutine(DestroyParticleEffect(newParticleEffect, 0.5f));
+        }
+
+        if (triggerCollider.tag == "Jewel")
+        {
+            Vector2 spawnPosition = new Vector2(triggerCollider.transform.position.x, triggerCollider.transform.position.y);
+            GameObject newParticleEffect = (GameObject)Instantiate(jewelParticleEffect, spawnPosition, Quaternion.Euler(Vector3.forward));
+            FindObjectOfType<CameraShake>().Shake(0.1f, 0.2f);
+            FindObjectOfType<ScoreManager>().AddToScore(250, "jewel");
+            multiplierTimer = 10;
+            StartCoroutine(EnableMultiplier());
+            FindObjectOfType<SoundManager>().PlayBiggerCoinCollectSound();
+            Destroy(triggerCollider.gameObject);
+            StartCoroutine(DestroyParticleEffect(newParticleEffect, 0.5f));
         }
 
     }
