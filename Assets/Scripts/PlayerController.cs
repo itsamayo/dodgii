@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
             FindObjectOfType<ScoreManager>().AddToScore(250, "jewel");
             multiplierTimer = 10;
             StartCoroutine(EnableMultiplier());
-            FindObjectOfType<SoundManager>().PlayBiggerCoinCollectSound();
+            FindObjectOfType<SoundManager>().PlayGodModeCollectSound();
             Destroy(triggerCollider.gameObject);
             StartCoroutine(DestroyParticleEffect(newParticleEffect, 0.5f));
         }

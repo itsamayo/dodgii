@@ -85,21 +85,21 @@ public class ScoreManager : MonoBehaviour
         }
 
         // Invincibility collector/horder achievements
-        if (godModesCollected >= 15)
+        if (godModesCollected >= 10)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_collector);
         }
-        if (godModesCollected >= 30)
+        if (godModesCollected >= 20)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_horder);
         }
 
         // Multiplier collector/horder achievements
-        if (jewelsCollected >= 15)
+        if (jewelsCollected >= 5)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_collector);
         }
-        if (jewelsCollected >= 30)
+        if (jewelsCollected >= 15)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_invincibility_horder);
         }
@@ -127,7 +127,7 @@ public class ScoreManager : MonoBehaviour
         }
 
         // Multiplier connoiseur
-        if (totalJewelsCollected >= 500)
+        if (totalJewelsCollected >= 350)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_multiplier_connoisseur);
         }
@@ -158,11 +158,11 @@ public class ScoreManager : MonoBehaviour
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_professional);
         }
-        if (points >= 2000)
+        if (points >= 3000)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_master);
         }
-        if (points >= 5000)
+        if (points >= 8000)
         {
             GooglePlayServices.instance.UnlockAchievement(GPGSIds.achievement_grand_master);
         }        

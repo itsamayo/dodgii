@@ -25,7 +25,7 @@ public class JewelSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!FindObjectOfType<GameManage>().isPaused && FindObjectOfType<GameManage>().hasStarted && FindObjectOfType<Difficulty>().GetDifficultyPercent() > 0.18f)
+        if (!FindObjectOfType<GameManage>().isPaused && FindObjectOfType<GameManage>().hasStarted && FindObjectOfType<Difficulty>().GetDifficultyPercent() > 0.18f && !FindObjectOfType<PlayerController>().godMode)
         {
             if (Time.time > nextSpawnTime)
             {
